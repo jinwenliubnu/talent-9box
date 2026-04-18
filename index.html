@@ -439,14 +439,14 @@
   .theme-swatch span { display: block; width: 8px; height: 14px; border-radius: 2px; }
   .theme-arrow { font-size: 10px; color: var(--text-dim); }
   .theme-menu {
-    position: absolute; top: calc(100% + 6px); left: 0;
+    position: absolute; top: calc(100% + 6px); right: 0;
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 6px;
     box-shadow: var(--shadow-lg);
     display: none; z-index: 500;
-    min-width: 230px;
+    min-width: 260px;
     max-height: 420px; overflow-y: auto;
   }
   .theme-menu.open { display: block; }
@@ -465,7 +465,7 @@
   .theme-reorder {
     display: flex; flex-direction: column; gap: 2px;
     margin-left: auto;
-    opacity: 0;
+    opacity: 0.55;
     transition: opacity 0.15s;
   }
   .theme-option:hover .theme-reorder,
@@ -487,6 +487,385 @@
     border-color: var(--primary-light);
   }
   .theme-reorder-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ===== Company logo slot ===== */
+  .logo-wrap { align-items: center !important; }
+  .logo-text { display: flex; flex-direction: column; gap: 3px; }
+  .company-logo {
+    width: 50px; height: 50px;
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: var(--panel-soft);
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    padding: 0;
+  }
+  .company-logo:hover { border-color: var(--primary-light); background: var(--panel); }
+  .company-logo.has-logo {
+    border: 1px solid var(--border);
+    border-style: solid;
+    background: white;
+    padding: 3px;
+  }
+  .company-logo img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: none;
+    border-radius: 6px;
+  }
+  .company-logo.has-logo img { display: block; }
+  .company-logo.has-logo .logo-placeholder { display: none; }
+  .logo-placeholder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+    width: 100%; height: 100%;
+    padding: 6px;
+    border-radius: 10px;
+  }
+  .logo-placeholder span {
+    background: var(--primary);
+    border-radius: 1.5px;
+  }
+  .logo-placeholder span:nth-child(1) { opacity: 0.14; }
+  .logo-placeholder span:nth-child(2) { opacity: 0.22; }
+  .logo-placeholder span:nth-child(3) { opacity: 0.34; }
+  .logo-placeholder span:nth-child(4) { opacity: 0.22; }
+  .logo-placeholder span:nth-child(5) { opacity: 0.42; }
+  .logo-placeholder span:nth-child(6) { opacity: 0.62; }
+  .logo-placeholder span:nth-child(7) { opacity: 0.34; }
+  .logo-placeholder span:nth-child(8) { opacity: 0.62; }
+  .logo-placeholder span:nth-child(9) { opacity: 0.88; }
+  .logo-remove {
+    position: absolute; top: -7px; right: -7px;
+    width: 18px; height: 18px;
+    background: var(--danger); color: white;
+    border: 2px solid var(--panel); border-radius: 50%;
+    font-size: 11px; cursor: pointer;
+    padding: 0; line-height: 1;
+    align-items: center; justify-content: center;
+    display: none;
+  }
+  .company-logo.has-logo:hover .logo-remove { display: flex; }
+
+  /* ===== Simplified toggle buttons ===== */
+  .btn-toggle {
+    display: inline-flex; align-items: center;
+    padding: 7px 14px;
+    font-family: inherit; font-size: 12.5px; font-weight: 500;
+    color: var(--text-mid);
+    background: var(--panel-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .btn-toggle:hover { border-color: var(--primary-light); color: var(--text); }
+  .btn-toggle.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 30%, transparent);
+  }
+  .btn-toggle.active:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    color: white;
+  }
+
+  /* ===== Display options picker ===== */
+  .display-picker { position: relative; }
+  .display-menu {
+    position: absolute; top: calc(100% + 6px); left: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: var(--shadow-lg);
+    display: none;
+    z-index: 500;
+    min-width: 250px;
+  }
+  .display-menu.open { display: block; }
+  .opt-group + .opt-group { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border-soft); }
+  .opt-label {
+    font-size: 11px; color: var(--text-mid);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .opt-label::before {
+    content: ''; width: 3px; height: 10px;
+    background: var(--primary); border-radius: 2px;
+  }
+  .opt-row { display: flex; gap: 4px; }
+  .opt-row button {
+    flex: 1;
+    padding: 6px 8px;
+    font-family: inherit; font-size: 12px; font-weight: 500;
+    color: var(--text-mid);
+    background: var(--panel-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .opt-row button:hover { border-color: var(--primary-light); color: var(--text); }
+  .opt-row button.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
+  /* ===== Description mode variants ===== */
+  .cell[data-desc="hover"] .cell-desc {
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+  .cell[data-desc="hover"]:hover .cell-desc {
+    opacity: 0.92;
+    pointer-events: auto;
+  }
+  .cell[data-desc="minimal"] .cell-desc { display: none; }
+  .cell[data-desc="hidden"] .cell-title,
+  .cell[data-desc="hidden"] .cell-count,
+  .cell[data-desc="hidden"] .cell-desc { display: none; }
+  .cell[data-desc="hidden"] .cell-header {
+    justify-content: flex-end;
+    margin-bottom: 0;
+  }
+  .cell[data-desc="hidden"] .cell-num {
+    font-size: 17px;
+    opacity: 0.45;
+  }
+
+  /* ===== Person style variants ===== */
+  .cell-people {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 6px 6px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 6px;
+    padding-right: 4px;
+    margin-top: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--cell-text) 30%, transparent) transparent;
+  }
+  .cell-people::-webkit-scrollbar { width: 4px; }
+  .cell-people::-webkit-scrollbar-track { background: transparent; }
+  .cell-people::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--cell-text) 28%, transparent);
+    border-radius: 2px;
+  }
+  .cell-people::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--cell-text) 50%, transparent);
+  }
+  .cell-people.style-dot,
+  .cell-people.style-avatar {
+    gap: 10px 8px;
+    padding-top: 10px;
+  }
+
+  .person {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    position: relative;
+    color: var(--cell-text, white);
+  }
+  .person:hover { filter: brightness(1.12); cursor: pointer; }
+
+  /* Dot — minimalist colored disc with glow ring */
+  .person.style-dot {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 30px;
+    padding: 2px 1px 0;
+  }
+  .person.style-dot .p-glyph {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--p-color);
+    box-shadow:
+      0 0 0 1.8px color-mix(in srgb, var(--cell-dark) 60%, transparent),
+      0 1px 3px rgba(0, 0, 0, 0.25);
+    border: none;
+  }
+  .person.style-dot .p-name {
+    font-size: 10.5px; font-weight: 500;
+    white-space: nowrap;
+    color: var(--cell-text);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+    letter-spacing: 0.02em;
+  }
+
+  /* Avatar — pill capsule with colored initial disc + name */
+  .person.style-avatar {
+    height: 22px;
+    padding: 0 10px 0 3px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--p-color) 18%, rgba(255,255,255,0.08));
+    border: 1px solid color-mix(in srgb, var(--p-color) 45%, transparent);
+    gap: 6px;
+  }
+  .person.style-avatar .p-glyph {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--p-color);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--title-font);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .person.style-avatar .p-name {
+    font-size: 11px; font-weight: 500;
+    color: var(--cell-text);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  /* Tag — solid dept color, white text, no glyph */
+  .person.style-tag {
+    padding: 3px 10px;
+    border-radius: 11px;
+    background: var(--p-color);
+    border: 1px solid transparent;
+    gap: 0;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--p-color) 40%, transparent);
+    letter-spacing: 0.02em;
+  }
+  .person.style-tag .p-glyph { display: none; }
+  .person.style-tag:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  /* Bar — compact capsule with colored dot + name (no initial letter) */
+  .person.style-bar {
+    height: 22px;
+    padding: 0 10px 0 5px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--p-color) 14%, rgba(255,255,255,0.08));
+    border: 1px solid color-mix(in srgb, var(--p-color) 38%, transparent);
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .person.style-bar:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+  .person.style-bar .p-glyph {
+    display: inline-block;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--p-color);
+    border: none;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--cell-dark) 55%, transparent);
+    flex-shrink: 0;
+  }
+  .person.style-bar .p-name {
+    font-size: 11px; font-weight: 500;
+    color: var(--cell-text);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .person.style-bar .p-score { display: none; }
+
+  /* Hide names mode */
+  .hide-names .person .p-name { display: none; }
+  .hide-names .person.style-dot { min-width: 16px; }
+  .hide-names .person.style-avatar { min-width: 30px; }
+  .hide-names .person.style-tag { padding: 4px 6px; }
+  .hide-names .person.style-bar .p-score { margin-left: auto; }
+
+  /* ===== Tag style — solid dept color, white text, no glyph ===== */
+  .person.style-tag {
+    padding: 3px 10px;
+    border-radius: 11px;
+    background: var(--p-color);
+    border: 1px solid transparent;
+    gap: 0;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--p-color) 40%, transparent);
+    letter-spacing: 0.02em;
+  }
+  .person.style-tag .p-glyph { display: none; }
+  .person.style-tag:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  /* ===== Pill-shaped count badge (top-right corner) ===== */
+  .cell-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 26px; height: 20px;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: var(--cell-count-bg);
+    color: var(--cell-count-color);
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 11.5px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid var(--cell-count-border, transparent);
+  }
+
+  /* ===== Toolbar spacer & export emphasis ===== */
+  .tool-spacer { flex: 1; min-width: 8px; }
+
+  .export-group {
+    padding: 0;
+    gap: 6px;
+  }
+  .export-group .tool-label {
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .btn-export {
+    padding: 6px 11px 6px 10px;
+    gap: 5px;
+    border-radius: 7px;
+    background: var(--panel-soft);
+    border-color: var(--border);
+    color: var(--text-mid);
+  }
+  .btn-export .export-icon {
+    font-size: 13px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+  .btn-export:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 8%, var(--panel-soft));
+  }
+  .btn-export:hover .export-icon { opacity: 1; }
 
   /* ===== FILTER BAR ===== */
   .filter-bar {
@@ -624,7 +1003,12 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 8px; position: relative;
+    min-height: 0; min-width: 0;
+    overflow: hidden;
   }
+  .grid-wrap { overflow: hidden; }
+  .cell { min-height: 0; min-width: 0; }
+  .cell-people { min-height: 0; }
   .x-labels {
     grid-column: 3; grid-row: 2;
     display: flex; justify-content: space-around; align-items: center;
@@ -689,19 +1073,33 @@
     letter-spacing: 0.05em;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
   }
-  .cell-count {
-    font-size: 10.5px;
-    color: var(--cell-count-color, rgba(255, 255, 255, 0.88));
-    background: var(--cell-count-bg, rgba(255, 255, 255, 0.18));
-    border-radius: 9px;
-    padding: 2px 7px;
-  }
   .cell-num {
-    font-family: var(--title-font);
-    font-size: 20px; font-weight: 600;
-    opacity: 0.78;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 26px; height: 22px;
+    padding: 0 8px;
+    border-radius: 11px;
+    background: var(--cell-count-bg);
+    color: var(--cell-count-color);
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 12px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    flex-shrink: 0;
     line-height: 1;
+  }
+  .cell-people-count {
+    font-size: 11px; font-weight: 500;
+    color: var(--cell-text);
+    opacity: 0.55;
+    margin-left: 2px;
+    letter-spacing: 0.02em;
+  }
+  .cell-people-count::before {
+    content: '·';
+    margin-right: 5px;
+    opacity: 0.6;
   }
   .cell-desc {
     list-style: none;
@@ -905,8 +1303,20 @@
 <div class="app">
   <header class="topbar">
     <div class="logo-wrap">
-      <div class="logo">人才九宫格</div>
-      <div class="logo-sub">TALENT · 9-BOX GRID</div>
+      <label class="company-logo" id="companyLogo" title="点击上传公司 Logo">
+        <input type="file" id="logoInput" class="file-input" accept="image/*">
+        <img id="logoImg" alt="">
+        <div class="logo-placeholder" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <button type="button" class="logo-remove" id="logoRemove" title="移除 Logo">×</button>
+      </label>
+      <div class="logo-text">
+        <div class="logo">人才九宫格</div>
+        <div class="logo-sub">TALENT · 9-BOX GRID</div>
+      </div>
     </div>
     <div class="topbar-stats">
       <div class="stat-pill">总人数 <b id="statTotal">0</b></div>
@@ -931,19 +1341,6 @@
     <div class="tool-sep"></div>
 
     <div class="tool-group">
-      <span class="tool-label">主题</span>
-      <div class="theme-picker">
-        <button class="theme-trigger" id="themeTrigger">
-          <span class="theme-swatch" id="themeSwatch"></span>
-          <span id="themeLabel">莫兰迪</span>
-          <span class="theme-arrow">▾</span>
-        </button>
-        <div class="theme-menu" id="themeMenu"></div>
-      </div>
-    </div>
-    <div class="tool-sep"></div>
-
-    <div class="tool-group">
       <div class="threshold-inline">
         <span class="label">绩效</span>
         <input type="number" class="input" id="perfT1" value="60">
@@ -960,20 +1357,56 @@
     <div class="tool-sep"></div>
 
     <div class="tool-group">
-      <div class="toggle-inline on" id="toggleNames">
-        <span>姓名</span>
-        <div class="switch-sm"></div>
+      <button type="button" class="btn-toggle active" id="toggleNames">● 姓名</button>
+      <button type="button" class="btn-toggle" id="toggleSwap">⇄ 转置</button>
+      <div class="display-picker">
+        <button type="button" class="btn-toggle" id="displayTrigger">☰ 显示 ▾</button>
+        <div class="display-menu" id="displayMenu">
+          <div class="opt-group">
+            <div class="opt-label">人员样式</div>
+            <div class="opt-row" data-kind="personStyle">
+              <button type="button" data-v="dot" class="active">圆点</button>
+              <button type="button" data-v="avatar">头像</button>
+              <button type="button" data-v="tag">标签</button>
+              <button type="button" data-v="bar">条</button>
+            </div>
+          </div>
+          <div class="opt-group">
+            <div class="opt-label">说明文字</div>
+            <div class="opt-row" data-kind="descMode">
+              <button type="button" data-v="always" class="active">始终</button>
+              <button type="button" data-v="hover">悬停</button>
+              <button type="button" data-v="minimal">精简</button>
+              <button type="button" data-v="hidden">隐藏</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="toggle-inline" id="toggleSwap">
-        <span>轴换</span>
-        <div class="switch-sm"></div>
-      </div>
+    </div>
+
+    <div class="tool-spacer"></div>
+
+    <div class="tool-group export-group">
+      <span class="tool-label">导出</span>
+      <button class="btn btn-export" id="exportImgBtn" title="下载为 PNG 图片">
+        <span class="export-icon">◧</span><span>图片</span>
+      </button>
+      <button class="btn btn-export" id="exportPptBtn" title="下载为可编辑 PPT">
+        <span class="export-icon">▣</span><span>PPT</span>
+      </button>
     </div>
     <div class="tool-sep"></div>
 
     <div class="tool-group">
-      <button class="btn" id="exportImgBtn">◧ 图片</button>
-      <button class="btn" id="exportPptBtn">▤ PPT</button>
+      <span class="tool-label">主题</span>
+      <div class="theme-picker">
+        <button class="theme-trigger" id="themeTrigger">
+          <span class="theme-swatch" id="themeSwatch"></span>
+          <span id="themeLabel">商务简约</span>
+          <span class="theme-arrow">▾</span>
+        </button>
+        <div class="theme-menu" id="themeMenu"></div>
+      </div>
     </div>
   </div>
 
@@ -1529,6 +1962,9 @@ const state = {
   deptColors: new Map(),
   theme: "business",
   themeOrder: [...DEFAULT_THEME_ORDER],
+  logo: null,
+  personStyle: "dot",
+  descMode: "always",
 };
 
 function hexToRgb(hex) {
@@ -1682,7 +2118,8 @@ function renderGrid() {
     cellPeople[key].push(p);
   }
 
-  const cellData = [];
+  grid.classList.toggle("hide-names", !state.showNames);
+
   for (let r = 0; r < 3; r++) {
     for (let c = 0; c < 3; c++) {
       const key = cellKeyFromGrid(r, c);
@@ -1693,6 +2130,7 @@ function renderGrid() {
 
       const cell = document.createElement("div");
       cell.className = "cell";
+      cell.setAttribute("data-desc", state.descMode);
       cell.style.setProperty("--cell-light", colors.light);
       cell.style.setProperty("--cell-dark", colors.dark);
       cell.style.setProperty("--cell-text", text);
@@ -1707,12 +2145,13 @@ function renderGrid() {
 
       const header = document.createElement("div");
       header.className = "cell-header";
+      const plainPos = "①②③④⑤⑥⑦⑧⑨".indexOf(def.num) + 1;
       header.innerHTML = `
         <div class="cell-title-wrap">
           <span class="cell-title">${def.title}</span>
-          <span class="cell-count">${people.length} 人</span>
+          ${people.length ? `<span class="cell-people-count">${people.length} 人</span>` : ''}
         </div>
-        <span class="cell-num">${def.num}</span>
+        <span class="cell-num">${plainPos || def.num}</span>
       `;
       cell.appendChild(header);
 
@@ -1725,12 +2164,36 @@ function renderGrid() {
       }
       cell.appendChild(desc);
 
-      const dotWrap = document.createElement("div");
-      dotWrap.className = "cell-dots";
-      cell.appendChild(dotWrap);
+      const peopleWrap = document.createElement("div");
+      peopleWrap.className = "cell-people style-" + state.personStyle;
+      for (const p of people) {
+        const pEl = document.createElement("div");
+        pEl.className = "person style-" + state.personStyle;
+        pEl.style.setProperty("--p-color", getDeptColor(p.dept));
+        const glyph = document.createElement("span");
+        glyph.className = "p-glyph";
+        if (state.personStyle === "avatar") {
+          glyph.textContent = p.name ? p.name.charAt(0) : "?";
+        }
+        pEl.appendChild(glyph);
+        const nameEl = document.createElement("span");
+        nameEl.className = "p-name";
+        nameEl.textContent = p.name;
+        pEl.appendChild(nameEl);
+        if (state.personStyle === "bar") {
+          const score = document.createElement("span");
+          score.className = "p-score";
+          score.textContent = `${p.perf} · ${p.pot}`;
+          pEl.appendChild(score);
+        }
+        pEl.addEventListener("mouseenter", e => showTooltip(e, p));
+        pEl.addEventListener("mousemove", moveTooltip);
+        pEl.addEventListener("mouseleave", hideTooltip);
+        peopleWrap.appendChild(pEl);
+      }
+      cell.appendChild(peopleWrap);
 
       grid.appendChild(cell);
-      cellData.push({ cell, dotWrap, people, desc });
     }
   }
 
@@ -1744,12 +2207,6 @@ function renderGrid() {
     `;
     grid.appendChild(empty);
   }
-
-  requestAnimationFrame(() => {
-    for (const cd of cellData) {
-      placeDotsInCell(cd);
-    }
-  });
 }
 
 function placeDotsInCell({ cell, dotWrap, people, desc }) {
@@ -2310,13 +2767,76 @@ let thresholdTimer;
 });
 document.getElementById("toggleNames").addEventListener("click", e => {
   state.showNames = !state.showNames;
-  e.currentTarget.classList.toggle("on", state.showNames);
+  e.currentTarget.classList.toggle("active", state.showNames);
   render();
 });
 document.getElementById("toggleSwap").addEventListener("click", e => {
   state.swapped = !state.swapped;
-  e.currentTarget.classList.toggle("on", state.swapped);
+  e.currentTarget.classList.toggle("active", state.swapped);
   render();
+});
+
+// Display options menu
+const displayTrigger = document.getElementById("displayTrigger");
+const displayMenu = document.getElementById("displayMenu");
+displayTrigger.addEventListener("click", e => {
+  e.stopPropagation();
+  const open = displayMenu.classList.toggle("open");
+  displayTrigger.classList.toggle("active", open);
+});
+document.addEventListener("click", e => {
+  if (!e.target.closest(".display-picker")) {
+    displayMenu.classList.remove("open");
+    displayTrigger.classList.remove("active");
+  }
+});
+displayMenu.querySelectorAll(".opt-row").forEach(row => {
+  const kind = row.dataset.kind;
+  row.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const val = btn.dataset.v;
+      state[kind] = val;
+      row.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+      try { localStorage.setItem("talent9Display", JSON.stringify({ personStyle: state.personStyle, descMode: state.descMode })); } catch (e) {}
+      render();
+    });
+  });
+});
+
+// Logo
+const logoInput = document.getElementById("logoInput");
+const companyLogo = document.getElementById("companyLogo");
+const logoImg = document.getElementById("logoImg");
+const logoRemove = document.getElementById("logoRemove");
+function setLogo(dataUrl) {
+  state.logo = dataUrl;
+  if (dataUrl) {
+    logoImg.src = dataUrl;
+    companyLogo.classList.add("has-logo");
+    try { localStorage.setItem("companyLogo", dataUrl); } catch (e) {}
+  } else {
+    logoImg.src = "";
+    companyLogo.classList.remove("has-logo");
+    try { localStorage.removeItem("companyLogo"); } catch (e) {}
+  }
+}
+logoInput.addEventListener("change", e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (f.size > 2 * 1024 * 1024) {
+    alert("Logo 文件过大，请选择 2MB 以内的图片");
+    e.target.value = "";
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ev => setLogo(ev.target.result);
+  reader.readAsDataURL(f);
+  e.target.value = "";
+});
+logoRemove.addEventListener("click", e => {
+  e.preventDefault();
+  e.stopPropagation();
+  setLogo(null);
 });
 document.getElementById("clearDeptBtn").addEventListener("click", () => {
   state.selectedDepts = new Set();
@@ -2335,7 +2855,7 @@ window.addEventListener("resize", () => {
     `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 })();
 
-// Restore saved theme order & theme
+// Restore saved theme order, theme, logo, display options
 try {
   const savedOrder = localStorage.getItem("talent9ThemeOrder");
   if (savedOrder) {
@@ -2346,8 +2866,21 @@ try {
       state.themeOrder = [...valid, ...missing];
     }
   }
+  const savedLogo = localStorage.getItem("companyLogo");
+  if (savedLogo) setLogo(savedLogo);
+  const savedDisplay = localStorage.getItem("talent9Display");
+  if (savedDisplay) {
+    const d = JSON.parse(savedDisplay);
+    if (d.personStyle) state.personStyle = d.personStyle;
+    if (d.descMode) state.descMode = d.descMode;
+    displayMenu.querySelectorAll(".opt-row").forEach(row => {
+      const kind = row.dataset.kind;
+      row.querySelectorAll("button").forEach(b => {
+        b.classList.toggle("active", b.dataset.v === state[kind]);
+      });
+    });
+  }
   const savedTheme = localStorage.getItem("talent9Theme");
-  try { localStorage.removeItem("companyLogo"); } catch (e) {}
   buildThemeMenu();
   applyTheme(savedTheme && THEMES[savedTheme] ? savedTheme : state.themeOrder[0]);
 } catch (e) {
